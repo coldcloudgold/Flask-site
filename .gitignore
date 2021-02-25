@@ -1,0 +1,4 @@
+.env
+post.db
+.vscode/
+__pycache__/

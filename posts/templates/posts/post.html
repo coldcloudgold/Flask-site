@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block title %}Пост: {{ post.title }}{% endblock %}
+
+
+{% block body %}
+<div class="container my-1">
+    <div class="row">
+        <div class="col my-2">
+            <h1>{{ post.title }}</h1>
+            <p>{{ post.body | safe }}</p>
+            <h5>
+                Пост создан: {{ post.created }}<br>
+                Автор: <a class="btn btn-dark" href="{{ url_for('users.profile_user', nickname=post.user.nickname) }}"
+                    role="button">{{ post.user.nickname
+                    }}</a>
+            </h5>
+
+            {% if post.tag %}
+            <h5>Тэги:
+                {% for tag in post.tag %}
+                <a class="btn btn-dark" href="{{ url_for('posts.tag', title_tag=tag.title) }}" role="button">{{
+                    tag.title }}</a>
+                {% endfor %}
+            </h5>
+            {% endif %}
+
+            {% if current_user.is_authenticated %}
+            <form method="POST">
+                {% for message in get_flashed_messages() %}
+                <div class="flash">{{ message }}</div>
+                {% endfor %}
+                {{ form.hidden_tag() }}
+                <div class="form-floating col-md-8">
+                    {{ form.body(class="form-control", placeholder="Leave a comment here", id="floatingTextarea") }}
+                    <label for="floatingTextarea">Комментировать</label>
+                </div>
+                {{ form.submit() }}
+            </form>
+            {% endif %}
+
+            {% if post.post_comment.all() %}
+            <h5>Комментарии:</h5>
+            {% for commnet in post.post_comment %}
+            <div class="card my-2">
+                <div class="card-header">
+                    <b>{{ commnet.user.nickname }}, {{ commnet.created }}</b>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">{{ commnet.body }}</p>
+                </div>
+            </div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

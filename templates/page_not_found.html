@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Страница не существует{% endblock %}
+
+
+{% block body %}
+<div class="container my-1">
+    <div class="row justify-content-center">
+        <div class="col-auto">
+            <h1>Данной страницы не существует</h1>
+            <a class="btn btn-primary btn-lg" href="{{ url_for('index') }}" role="button">Все посты</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

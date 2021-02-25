@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}Профиль{% endblock %}
+
+{% block body %}
+<div class="container my-1">
+    <div class="row text-center">
+        {% if not user %}
+        <h1>Здравствуйте, {{ current_user.nickname }}!</h1>
+        <h2>Ваши посты:</h2>
+        {% for post in posts %}
+        <div class="col-md-4 col-sm-12 my-2">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ post.title }}</h5>
+                    <p class="card-text">{{ post.body[0:50] | striptags }}...</p>
+                    <div class="btn-group">
+                        <a href="{{ url_for('posts.post', number_post=post.id) }}" class="btn btn-primary">Читать</a>
+                        <a href="{{ url_for('posts.edit', number_post=post.id) }}"
+                            class="btn btn-primary">Редактировать</a>
+                        <a href="{{ url_for('posts.delete', number_post=post.id) }}" class="btn btn-primary">Удалить</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <h1>Здравствуйте, вы на странице профиля: {{ user.nickname }}!<br>Почта: {{ user.email }}</h1>
+        <h2>Посты:</h2>
+        {% for post in posts %}
+        <div class="col-md-3 col-sm-12 my-2">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ post.title }}</h5>
+                    <p class="card-text">{{ post.body[0:50] | striptags }}...</p>
+                    <a href="{{ url_for('posts.post', number_post=post.id) }}" class="btn btn-primary">Читать</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

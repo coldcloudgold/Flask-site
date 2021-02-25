@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}Главная страница{% endblock %}
+
+{% block search %}
+<form class="d-flex">
+    <input class="form-control me-2" type="search" aria-label="Search" name="query">
+    <button class="btn btn-outline-primary" type="submit">Поиск</button>
+</form>
+{% endblock %}
+
+{% block body %}
+<div class="container my-1">
+    <div class="row text-center">
+        <h1>Посты</h1>
+        {% for post in posts %}
+        <div class="col-md-6 col-sm-12 my-2">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ post.title }}</h5>
+                    <p class="card-text">{{ post.body[0:50] | striptags }}...</p>
+                    <a href="{{ url_for('posts.post', number_post=post.id) }}" class="btn btn-primary">Читать</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        <div>
+            {% if not page[0] %}
+            <a class="btn btn-primary" href="#" role="button">&laquo;</a>
+            {% else %}
+            <a class="btn btn-primary" href="{{ url_for('index', page=page[0], query=user_query) }}"
+                role="button">&laquo;</a>
+            {% endif %}
+            {% if not page[1] %}
+            <a class="btn btn-primary" href="#" role="button">&raquo;</a>
+            {% else %}
+            <a class="btn btn-primary" href="{{ url_for('index', page=page[1], query=user_query) }}"
+                role="button">&raquo;</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

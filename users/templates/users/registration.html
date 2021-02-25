@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}Регистрация{% endblock %}
+
+{% block body %}
+<div class="container my-1">
+    <div class="row justify-content-center">
+        <div class="col-auto">
+            <form method="POST">
+                <h1>Регистрация</h1>
+                {% for message in get_flashed_messages() %}
+                <div class="flash">{{ message }}</div>
+                {% endfor %}
+                {{ form.hidden_tag() }}
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Почта</label>
+                    {{ form.email(type="email", class="form-control", id="exampleFormControlInput1",
+                    placeholder="____@____.___") }}
+                </div>
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Ник</label>
+                    {{ form.nickname(class="form-control", type="text") }}
+                </div>
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Пароль</label>
+                    {{ form.password(type="password", class="form-control", id="exampleInputPassword1") }}
+                </div>
+                {{ form.submit() }}
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
